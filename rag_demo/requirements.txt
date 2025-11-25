@@ -1,0 +1,17 @@
+# Core dependencies
+pandas>=2.0.0
+numpy>=1.24.0
+
+# RAG dependencies
+sentence-transformers>=2.2.0
+chromadb>=0.4.0
+ollama>=0.1.0
+
+# Streamlit for web interface
+streamlit>=1.28.0
+
+# Optional: For using transformers directly instead of Ollama
+# transformers>=4.35.0
+# torch>=2.0.0
+# accelerate>=0.24.0
+

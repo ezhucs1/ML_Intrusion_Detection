@@ -1,18 +1,9 @@
-# CSE543_Group1 ignores
-CSE543_Group1/data_original/
-CSE543_Group1/Testing_data/
-CSE543_Group1/models/*.pkl
-CSE543_Group1/models_size_*/
-CSE543_Group1/models_multiclass_*/
-CSE543_Group1/visualizations/
-CSE543_Group1/__pycache__/
-CSE543_Group1/src/__pycache__/
+# Large data files
+data_original/
+Testing_data/
 
-# rag_demo ignores
-rag_demo/venv/
-rag_demo/chroma_db/
-rag_demo/__pycache__/
-rag_demo/src/__pycache__/
+# Models (train on other device)
+models/*.pkl
 
 # Python
 __pycache__/
@@ -48,6 +39,9 @@ wheels/
 *.swo
 *~
 
+# Jupyter
+.ipynb_checkpoints
+
 # OS
 .DS_Store
 Thumbs.db
@@ -65,7 +59,9 @@ Thumbs.db
 training_output.log
 
 # Visualizations (generated files)
+visualizations/
 *.png
 *.jpg
 *.jpeg
 *.pdf
+
