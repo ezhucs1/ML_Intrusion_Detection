@@ -1,5 +1,7 @@
 # 🎤 Presentation Outline: Intrusion Detection System
 
+> **Note**: For setup and usage instructions, see the main [README.md](README.md)
+
 ## Slide-by-Slide Guide (10-15 minutes)
 
 ---
@@ -358,4 +360,10 @@ Before presenting:
 ---
 
 **Good luck with your presentation! 🚀**
+
+
+
+
+
+
 

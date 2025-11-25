@@ -1,6 +1,6 @@
 {
-  "model_type": "GradientBoosting",
-  "n_features": 70,
+  "model_type": "RandomForest",
+  "n_features": 68,
   "feature_names": [
     "Destination Port",
     "Flow Duration",
@@ -33,7 +33,6 @@
     "Bwd IAT Max",
     "Bwd IAT Min",
     "Fwd PSH Flags",
-    "Fwd URG Flags",
     "Fwd Header Length",
     "Bwd Header Length",
     "Fwd Packets/s",
@@ -49,7 +48,6 @@
     "PSH Flag Count",
     "ACK Flag Count",
     "URG Flag Count",
-    "CWE Flag Count",
     "ECE Flag Count",
     "Down/Up Ratio",
     "Average Packet Size",
@@ -74,9 +72,32 @@
     "Idle Min"
   ],
   "metrics": {
-    "accuracy": 0.99855,
-    "precision": 0.9985498701329885,
-    "recall": 0.99855,
-    "f1_score": 0.9985499311451145
+    "accuracy": 0.9984523906491813,
+    "precision": 0.9984511663608167,
+    "recall": 0.9984523906491813,
+    "f1_score": 0.9984516249645147
+  },
+  "all_models_metrics": {
+    "RandomForest": {
+      "train_accuracy": 0.9994908765070055,
+      "test_accuracy": 0.9984523906491813,
+      "precision": 0.9984511663608167,
+      "recall": 0.9984523906491813,
+      "f1_score": 0.9984516249645147
+    },
+    "GradientBoosting": {
+      "train_accuracy": 0.9994094167481264,
+      "test_accuracy": 0.9982894844017268,
+      "precision": 0.9982880987065514,
+      "recall": 0.9982894844017268,
+      "f1_score": 0.9982886381186741
+    },
+    "NeuralNetwork": {
+      "train_accuracy": 0.996599055066797,
+      "test_accuracy": 0.9940539219679074,
+      "precision": 0.9940301450496416,
+      "recall": 0.9940539219679074,
+      "f1_score": 0.9940371497540454
+    }
   }
 }
