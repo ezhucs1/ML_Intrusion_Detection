@@ -107,7 +107,7 @@ These folders and the large model files are **not** tracked by Git (they are in 
 From `CSE543_Group1/`:
 
 ```bash
-cd /home/ezhucs1/detection_ML/CSE543_Group1
+cd <YOUR_PROJECT_PATH>/CSE543_Group1
 
 # (Optional) create venv
 python3 -m venv .venv
@@ -124,7 +124,7 @@ pip install -r requirements.txt
 Train the binary model using a 100,000‑sample stratified subset of CIC‑IDS‑2017:
 
 ```bash
-cd /home/ezhucs1/detection_ML/CSE543_Group1
+cd <YOUR_PROJECT_PATH>/CSE543_Group1
 source .venv/bin/activate   # if using virtualenv
 
 python src/train_model.py --binary --models-dir models --n-samples 100000
@@ -145,7 +145,7 @@ What this does:
 Run the standard evaluation on a **10,000‑record** subset of CIC‑IDS‑2018:
 
 ```bash
-cd /home/ezhucs1/detection_ML/CSE543_Group1
+cd <YOUR_PROJECT_PATH>/CSE543_Group1
 python src/test_model.py
 ```
 
@@ -180,7 +180,7 @@ Visual outputs (in `visualizations/`):
 Now evaluate the same **RandomForest** model from `models/` across multiple test sizes, including **30,000**:
 
 ```bash
-cd /home/ezhucs1/detection_ML/CSE543_Group1
+cd <YOUR_PROJECT_PATH>/CSE543_Group1
 python src/test_rf_100k_multiple_sizes.py
 ```
 
@@ -248,7 +248,7 @@ Visual outputs (in `visualizations/`):
 3. Create & activate a Python environment, then:
 
 ```bash
-cd /home/ezhucs1/detection_ML/CSE543_Group1
+cd <YOUR_PROJECT_PATH>/CSE543_Group1
 pip install -r requirements.txt
 
 # Train on 100,000 CIC-IDS-2017 samples (binary)
