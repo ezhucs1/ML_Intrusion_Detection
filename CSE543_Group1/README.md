@@ -102,6 +102,13 @@ These folders and the large model files are **not** tracked by Git (they are in 
 
 ---
 
+## 🌐 Dataset Download Links
+
+- **CIC-IDS-2017**: [Official dataset page](https://www.unb.ca/cic/datasets/ids-2017.html)  
+- **CIC-IDS-2018**: [Official dataset page](https://www.unb.ca/cic/datasets/ids-2018.html)
+
+---
+
 ## ⚙️ Environment Setup
 
 From `CSE543_Group1/`:
