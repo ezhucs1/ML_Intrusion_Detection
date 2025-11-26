@@ -235,7 +235,7 @@ Per‑class (30,000 records):
 **Attack Detection Rate** (TP / (TP + FN)) at 30,000 records:
 
 - Confusion matrix row for Attack: FN = 3,518, TP = 12,610
-- \( \text{ADR} = 12610 / (12610 + 3518) \approx 0.7819 \)  
+- ADR = 12610 / (12610 + 3518) = 0.7819
 - **Attack Detection Rate: 78.19%**
 
 Visual outputs (in `visualizations/`):
