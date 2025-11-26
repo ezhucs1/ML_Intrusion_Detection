@@ -17,7 +17,7 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-# Import from src directory
+# Import from src directory (shared with main binary evaluation script)
 try:
     from data_processor import DataProcessor
     from visualize_metrics import (plot_confusion_matrix_heatmap, plot_roc_curve,
@@ -29,7 +29,7 @@ except ImportError:
     from visualize_metrics import (plot_confusion_matrix_heatmap, plot_roc_curve,
                                   plot_metrics_table, plot_sample_size_comparison)
 
-def load_rf_model_from_100k(models_dir='models_size_100000'):
+def load_rf_model_from_100k(models_dir='models'):
     """
     Load RandomForest model trained with 100K samples
     
@@ -40,7 +40,7 @@ def load_rf_model_from_100k(models_dir='models_size_100000'):
         Tuple of (model, scaler, feature_names)
     """
     print("="*70)
-    print("LOADING RANDOMFOREST MODEL (Trained with 100K samples)")
+    print("LOADING RANDOMFOREST MODEL (Main binary model from 'models/')")
     print("="*70)
     
     candidates_path = os.path.join(models_dir, 'model_candidates.pkl')
@@ -243,16 +243,17 @@ def create_comprehensive_visualizations(all_results, output_dir='visualizations'
     for size in sorted(all_results.keys()):
         result = all_results[size]
         metrics = result['metrics']
+        cm = metrics['confusion_matrix']
         summary_data.append({
             'Test Sample Size': f"{size:,}",
             'Accuracy (%)': f"{metrics['accuracy']*100:.2f}",
             'Precision (%)': f"{metrics['precision']*100:.2f}",
             'Recall (%)': f"{metrics['recall']*100:.2f}",
             'F1-Score (%)': f"{metrics['f1_score']*100:.2f}",
-            'True Negatives': int(metrics['confusion_matrix'][0, 0]),
-            'False Positives': int(metrics['confusion_matrix'][0, 1]),
-            'False Negatives': int(metrics['confusion_matrix'][1, 0]),
-            'True Positives': int(metrics['confusion_matrix'][1, 1])
+            'True Negatives': int(cm[0, 0]),
+            'False Positives': int(cm[0, 1]),
+            'False Negatives': int(cm[1, 0]),
+            'True Positives': int(cm[1, 1])
         })
     
     summary_df = pd.DataFrame(summary_data)
@@ -270,18 +271,29 @@ def create_comprehensive_visualizations(all_results, output_dir='visualizations'
     print("\n" + "="*70)
     print(f"CLASSIFICATION REPORT (Test Size: {largest_size:,})")
     print("="*70)
+    y_true_largest = largest_result['y_test']
+    y_pred_largest = largest_result['y_pred']
     print(classification_report(
-        largest_result['y_test'],
-        largest_result['y_pred'],
+        y_true_largest,
+        y_pred_largest,
         target_names=['Benign', 'Attack'],
         zero_division=0
     ))
+
+    # Attack Detection Rate (binary: TP / (TP + FN)) for largest test size
+    cm_largest = confusion_matrix(y_true_largest, y_pred_largest)
+    if cm_largest.shape == (2, 2):
+        tn, fp, fn, tp = cm_largest.ravel()
+        if tp + fn > 0:
+            attack_detection_rate = tp / (tp + fn)
+            print(f"\nAttack Detection Rate: {attack_detection_rate:.4f} ({attack_detection_rate*100:.2f}%)")
     
     return summary_df
 
 def main():
     """Main function"""
-    models_dir = 'models_size_100000'
+    # Use the same directory as src/test_model.py so results are consistent
+    models_dir = 'models'
     test_sizes = [5000, 10000, 15000, 20000, 25000, 30000]
     
     print("\n" + "="*70)
