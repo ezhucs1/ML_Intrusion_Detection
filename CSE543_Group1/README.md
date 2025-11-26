@@ -23,7 +23,7 @@ All core code lives in `CSE543_Group1/src/`:
   - Standardizes column names across days / datasets  
   - Cleans data (NaNs, infinities, header rows inside files)  
   - Builds feature matrix (68 features actually used by the final model)  
-  - Encodes labels for **binary** classification: `BENIGN` → 0, everything else → 1  
+  - Encodes labels for **binary** classification: `BENIGN` → 0, Attack (everything else) → 1  
 
 - `train_model.py`  
   - Trains 3 models on a **stratified 100,000‑sample subset** of CIC‑IDS‑2017:
