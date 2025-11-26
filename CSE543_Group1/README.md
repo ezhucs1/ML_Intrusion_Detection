@@ -268,6 +268,5 @@ python src/test_model.py
 python src/test_rf_100k_multiple_sizes.py
 ```
 
-This will reproduce the **100k training / 30k testing** results and regenerate all graphs for your presentation.
-
+This will reproduce the **100k training / 30k testing** results and regenerate all graphs
 
