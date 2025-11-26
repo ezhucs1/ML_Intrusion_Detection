@@ -78,10 +78,6 @@ All core code lives in `CSE543_Group1/src/`:
     - Metrics tables
     - Training/test size comparison plots
 
-- `web_demo.py`  
-  - Streamlit web UI for interactively testing the trained model (manual inputs / file upload).  
-  - Optional for presentation; the main experiment does not depend on it.
-
 ---
 
 ## 📊 Data Layout
