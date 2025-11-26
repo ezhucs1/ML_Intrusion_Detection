@@ -270,3 +270,80 @@ python src/test_rf_100k_multiple_sizes.py
 
 This will reproduce the **100k training / 30k testing** results and regenerate all graphs
 
+
+---
+
+## 🎯 Optional: Multiclass Model (All Attack Types as Separate Classes)
+
+In addition to the **binary** setup (`BENIGN` vs `Attack`), you can train and evaluate a **multiclass** model where each attack type is treated as a separate class.
+
+### 🧑‍🏫 Multiclass Training on CIC‑IDS‑2017 (100,000 samples)
+
+This uses the same training data, but preserves the original attack labels instead of collapsing them into a single `Attack` class.
+
+```bash
+cd <YOUR_PROJECT_PATH>/CSE543_Group1
+source .venv/bin/activate   # if using virtualenv
+
+python src/train_model.py --multiclass --models-dir models_multiclass_size_100000 --n-samples 100000
+```
+
+What this does:
+
+- Loads all `data_original/*.csv`
+- Creates a stratified 100,000‑sample training set
+- Keeps **BENIGN** and each **attack type** as separate classes
+- Trains RandomForest, GradientBoosting, and Neural Network
+- Selects the best by F1‑Score (multiclass weighted)
+- Saves best model and candidates to:
+  - `models_multiclass_size_100000/intrusion_detection_model.pkl`
+  - `models_multiclass_size_100000/model_candidates.pkl`
+  - `models_multiclass_size_100000/feature_names.json`
+  - `models_multiclass_size_100000/model_info.json`
+
+---
+
+### 🧪 Multiclass Evaluation on CIC‑IDS‑2018
+
+To evaluate the trained **multiclass** model on CIC‑IDS‑2018 and generate comparison plots:
+
+```bash
+cd <YOUR_PROJECT_PATH>/CSE543_Group1
+python src/test_model.py --models-dir models_multiclass_size_100000 --multiclass
+```
+
+This script:
+
+- Loads the best multiclass model from `models_multiclass_size_100000/`
+- Loads CIC‑IDS‑2018 records from `Testing_data/` (up to 10,000 by default)
+- Evaluates all three models (RandomForest / GradientBoosting / NeuralNetwork)
+- Prints a **multiclass classification report** (per‑class Precision/Recall/F1)
+- Prints a **multiclass confusion matrix** and **per‑class accuracies**
+- Computes an **overall attack detection rate** across all non‑BENIGN classes
+- Saves updated visualizations (reused filenames) in `visualizations/`:
+  - `confusion_matrix.png`       (now multiclass heatmap)
+  - `model_comparison.png`       (metrics for all three models)
+  - `metrics_table.png`
+
+You can run the **binary** and **multiclass** evaluation commands separately and compare:
+
+- Overall Accuracy / F1‑Score
+- Per‑class performance (which attacks are harder to detect)
+- Confusion matrices (binary vs multiclass)
+
+---
+
+### 📉 Why the Multiclass Model Performs Worse than the Binary Model
+
+From a reference multiclass run on **10,000 CIC‑IDS‑2018 records** (best model: `GradientBoosting`):
+
+- **Accuracy**: ~**46.8%** (vs **87.6%** for the binary model)  
+- Many attack classes (e.g., `DDOS`, `DOS GOLDENEYE`, `DOS HULK`, `DOS SLOWLORIS`, `FTP-PATATOR`, `HEARTBLEED`, `INFILTRATION`, `PORTSCAN`) have **0% recall and 0% F1‑Score**.  
+- The multiclass model focuses on a few dominant classes (**BENIGN** ~95% per‑class accuracy; `BOT` ~49% accuracy) and almost never predicts the rarer attack types.  
+- The **overall attack detection rate** across all non‑BENIGN classes is only **~43.7%**, much lower than the **78.2%** ADR for the binary model.
+
+This happens because:
+
+- The **multiclass problem is much harder**: the model must distinguish many similar attack types instead of just “Attack vs Benign”.  
+- The dataset is **highly imbalanced across attack types** (some attacks have very few samples), so the model learns to favor common classes and effectively “ignores” rare ones.  
+- With limited training samples per class, the multiclass model **cannot generalize well** to all attack types, whereas the binary model can pool all attacks together and learn a much stronger decision boundary between normal and malicious traffic.
